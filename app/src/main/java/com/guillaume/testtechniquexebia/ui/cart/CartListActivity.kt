@@ -1,4 +1,4 @@
-package com.guillaume.testtechniquexebia.ui
+package com.guillaume.testtechniquexebia.ui.cart
 
 import android.os.Bundle
 import androidx.annotation.StringRes
@@ -10,27 +10,27 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.guillaume.testtechniquexebia.R
-import com.guillaume.testtechniquexebia.databinding.ActivityBookListBinding
+import com.guillaume.testtechniquexebia.databinding.ActivityCartListBinding
 import com.guillaume.testtechniquexebia.injection.ViewModelFactory
 
-class BookListActivity : AppCompatActivity() {
-    private lateinit var binding: ActivityBookListBinding
-    private lateinit var viewModel: BookListViewModel
+class CartListActivity : AppCompatActivity() {
+    private lateinit var binding: ActivityCartListBinding
+    private lateinit var viewModel: CartListViewModel
     private var errorSnackbar: Snackbar? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(BookListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this, ViewModelFactory(this)).get(CartListViewModel::class.java)
 
-        binding = DataBindingUtil.setContentView(this, R.layout.activity_book_list)
+        binding = DataBindingUtil.setContentView(this, R.layout.activity_cart_list)
         binding.bookList.layoutManager = LinearLayoutManager(
             this,
             RecyclerView.VERTICAL,
             false
         )
 
-        viewModel = ViewModelProviders.of(this).get(BookListViewModel::class.java)
+        viewModel = ViewModelProviders.of(this).get(CartListViewModel::class.java)
         viewModel.errorMessage.observe(this, Observer { errorMessage ->
             if (errorMessage != null) showError(errorMessage) else hideError()
         })

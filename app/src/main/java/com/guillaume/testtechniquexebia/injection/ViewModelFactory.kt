@@ -5,14 +5,22 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.room.Room
 import com.guillaume.testtechniquexebia.database.AppDatabase
-import com.guillaume.testtechniquexebia.ui.BookListViewModel
+import com.guillaume.testtechniquexebia.ui.cart.CartListViewModel
+import com.guillaume.testtechniquexebia.ui.store.StoreListViewModel
 
-class ViewModelFactory(private val activity: AppCompatActivity): ViewModelProvider.Factory{
+class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvider.Factory {
+    // @TODO: refactor
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(BookListViewModel::class.java)) {
+        if (modelClass.isAssignableFrom(CartListViewModel::class.java)) {
             val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "books").build()
             @Suppress("UNCHECKED_CAST")
-            return BookListViewModel(db.booksDao()) as T
+            return CartListViewModel(db.booksDao()) as T
+        }
+
+        if (modelClass.isAssignableFrom(StoreListViewModel::class.java)) {
+            val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "books").build()
+            @Suppress("UNCHECKED_CAST")
+            return StoreListViewModel(db.booksDao()) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
 

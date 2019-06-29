@@ -1,10 +1,10 @@
-package com.guillaume.testtechniquexebia.ui
+package com.guillaume.testtechniquexebia.ui.cart
 
 import androidx.lifecycle.MutableLiveData
 import com.guillaume.testtechniquexebia.BaseViewModel
 import com.guillaume.testtechniquexebia.model.Book
 
-class BookViewModel : BaseViewModel() {
+class CartViewModel : BaseViewModel() {
 
     private val bookTitle = MutableLiveData<String>()
     private val bookPrice = MutableLiveData<Int>()

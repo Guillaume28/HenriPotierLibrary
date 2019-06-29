@@ -1,8 +1,10 @@
 package com.guillaume.testtechniquexebia.injection.component
 
 import com.guillaume.testtechniquexebia.injection.module.NetworkModule
-import com.guillaume.testtechniquexebia.ui.BookListViewModel
-import com.guillaume.testtechniquexebia.ui.BookViewModel
+import com.guillaume.testtechniquexebia.ui.cart.CartListViewModel
+import com.guillaume.testtechniquexebia.ui.cart.CartViewModel
+import com.guillaume.testtechniquexebia.ui.store.StoreListViewModel
+import com.guillaume.testtechniquexebia.ui.store.StoreViewModel
 import dagger.Component
 import javax.inject.Singleton
 
@@ -13,12 +15,16 @@ import javax.inject.Singleton
 @Component(modules = [(NetworkModule::class)])
 interface ViewModelInjector {
     /**
-     * Injects required dependencies into the specified BookListViewModel.
-     * @param bookListViewModel BookListViewModel in which to inject the dependencies
+     * Injects required dependencies into the specified CartListViewModel.
+     * @param cartListViewModel CartListViewModel in which to inject the dependencies
      */
-    fun inject(bookListViewModel: BookListViewModel)
+    fun inject(cartListViewModel: CartListViewModel)
 
-    fun inject(bookViewModel: BookViewModel)
+    fun inject(cartViewModel: CartViewModel)
+
+    fun inject(storeListViewModel: StoreListViewModel)
+
+    fun inject(storeViewModel: StoreViewModel)
 
     @Component.Builder
     interface Builder {

@@ -1,19 +1,20 @@
-package com.guillaume.testtechniquexebia.ui
+package com.guillaume.testtechniquexebia.ui.cart
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.guillaume.testtechniquexebia.R
-import com.guillaume.testtechniquexebia.databinding.ItemBookBinding
+import com.guillaume.testtechniquexebia.databinding.CartItemBookBinding
 import com.guillaume.testtechniquexebia.model.Book
 
-class BookListAdapter : RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
+
+class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
     private lateinit var booksList: List<Book>
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
-        val binding: ItemBookBinding =
-            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.item_book, parent, false)
+        val binding: CartItemBookBinding =
+            DataBindingUtil.inflate(LayoutInflater.from(parent.context), R.layout.store_item_book, parent, false)
         return ViewHolder(binding)
     }
 
@@ -30,8 +31,8 @@ class BookListAdapter : RecyclerView.Adapter<BookListAdapter.ViewHolder>() {
         notifyDataSetChanged()
     }
 
-    class ViewHolder(private val binding: ItemBookBinding) : RecyclerView.ViewHolder(binding.root) {
-        private val viewModel = BookViewModel()
+    class ViewHolder(private val binding: CartItemBookBinding) : RecyclerView.ViewHolder(binding.root) {
+        private val viewModel = CartViewModel()
 
         fun bind(book: Book) {
             viewModel.bind(book)

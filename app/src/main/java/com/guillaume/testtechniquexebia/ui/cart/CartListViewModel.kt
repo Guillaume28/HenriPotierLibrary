@@ -1,4 +1,4 @@
-package com.guillaume.testtechniquexebia.ui
+package com.guillaume.testtechniquexebia.ui.cart
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
@@ -13,7 +13,7 @@ import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class BookListViewModel(private val booksDao: BookDao) : BaseViewModel() {
+class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
 
     @Inject
     lateinit var bookApi: BookApi
@@ -24,7 +24,8 @@ class BookListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadBooks() }
 
-    val bookListAdapter: BookListAdapter = BookListAdapter()
+    val cartListAdapter: CartListAdapter =
+        CartListAdapter()
 
     init {
         loadBooks()
@@ -65,7 +66,7 @@ class BookListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     }
 
     private fun onRetrieveBookListSuccess(bookList: List<Book>) {
-        bookListAdapter.updateBooksList(bookList)
+        cartListAdapter.updateBooksList(bookList)
     }
 
     private fun onRetrieveBookListError(err: Throwable) {

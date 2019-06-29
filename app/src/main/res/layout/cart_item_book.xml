@@ -6,7 +6,7 @@
     <data>
         <variable
                 name="viewModel"
-                type="com.guillaume.testtechniquexebia.ui.BookViewModel"/>
+                type="com.guillaume.testtechniquexebia.ui.cart.CartViewModel"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
