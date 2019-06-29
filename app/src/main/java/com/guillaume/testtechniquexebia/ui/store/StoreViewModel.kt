@@ -1,11 +1,8 @@
 package com.guillaume.testtechniquexebia.ui.store
 
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import com.guillaume.testtechniquexebia.BaseViewModel
 import com.guillaume.testtechniquexebia.model.Book
-import com.squareup.picasso.Picasso
 
 class StoreViewModel : BaseViewModel() {
 
@@ -29,10 +26,5 @@ class StoreViewModel : BaseViewModel() {
 
     fun getBookCover(): MutableLiveData<String>{
         return bookCover
-    }
-
-    @BindingAdapter("imageUrl", "picasso")
-    fun setImageUrl(view: ImageView, poserPath: String, picasso: Picasso) {
-        Picasso.with(view.context).load(poserPath).into(view)
     }
 }

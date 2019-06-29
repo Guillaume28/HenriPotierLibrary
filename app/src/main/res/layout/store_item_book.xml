@@ -7,7 +7,6 @@
         <variable
                 name="viewModel"
                 type="com.guillaume.testtechniquexebia.ui.store.StoreViewModel"/>
-        <variable name="picasso" type="com.squareup.picasso.Picasso"/>
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,8 +20,7 @@
                 android:layout_width="0dp"
                 android:layout_height="140dp"
                 android:textStyle="bold"
-                app:imageUrl="@{viewModel.imageUrl}"
-                app:picasso="@{picasso}"
+                app:imageUrl="@{viewModel.getBookCover()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
