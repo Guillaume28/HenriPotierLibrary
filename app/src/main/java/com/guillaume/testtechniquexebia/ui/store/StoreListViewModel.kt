@@ -1,15 +1,12 @@
 package com.guillaume.testtechniquexebia.ui.store
 
 import android.view.View
-import android.widget.ImageView
-import androidx.databinding.BindingAdapter
 import androidx.lifecycle.MutableLiveData
 import com.guillaume.testtechniquexebia.BaseViewModel
 import com.guillaume.testtechniquexebia.R
 import com.guillaume.testtechniquexebia.model.Book
 import com.guillaume.testtechniquexebia.model.BookDao
 import com.guillaume.testtechniquexebia.network.BookApi
-import com.squareup.picasso.Picasso
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable

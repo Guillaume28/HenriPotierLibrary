@@ -2,12 +2,14 @@ package com.guillaume.testtechniquexebia.ui.cart
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
+import androidx.room.Room
 import com.guillaume.testtechniquexebia.BaseViewModel
 import com.guillaume.testtechniquexebia.R
 import com.guillaume.testtechniquexebia.model.Book
 import com.guillaume.testtechniquexebia.model.BookDao
 import com.guillaume.testtechniquexebia.network.BookApi
 import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -22,13 +24,13 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { loadBooks() }
+    val errorClickListener = View.OnClickListener { insertBooksInCart() }
 
     val cartListAdapter: CartListAdapter =
         CartListAdapter()
 
     init {
-        loadBooks()
+        insertBooksInCart()
     }
 
     override fun onCleared() {
@@ -36,25 +38,11 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
         subscription.dispose()
     }
 
-    private fun loadBooks() {
-        subscription = Observable.fromCallable { booksDao.all }
-            .concatMap { dbBooksList ->
-                if (dbBooksList.isEmpty())
-                    bookApi.getBooks().concatMap { apiBooksList -> booksDao.insertAll(*apiBooksList.toTypedArray())
-                        Observable.just(apiBooksList)
-                    }
-                else
-                    Observable.just(dbBooksList)
-            }
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doOnSubscribe { onRetrieveBookListStart() }
-            .doOnTerminate { onRetrieveBookListFinish() }
-            .subscribe(
-                { result -> onRetrieveBookListSuccess(result) },
-                { err -> onRetrieveBookListError(err) }
-            )
+    private fun insertBooksInCart() {
+
     }
+
+
 
     private fun onRetrieveBookListStart() {
         loadingVisibility.value = View.VISIBLE
@@ -72,6 +60,10 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     private fun onRetrieveBookListError(err: Throwable) {
         println(err)
         errorMessage.value = R.string.post_error
+    }
+
+    fun getCart(): MutableList<Book> {
+        return booksDao.allBooksInShoppingCart
     }
 
 }

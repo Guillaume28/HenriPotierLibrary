@@ -14,12 +14,12 @@ interface BookDao {
     fun insertAll(vararg books: Book)
 
     @get:Query("SELECT * FROM book WHERE book.isInCart = 'true'")
-    val allBooksInShoppingCart: List<Book>
+    val allBooksInShoppingCart: MutableList<Book>
 
     @Update
     fun addToCart(vararg book: Book)
 
     @Update
-    fun removeToCart(vararg book: Book)
+    fun removeFromCart(vararg book: Book)
 
 }

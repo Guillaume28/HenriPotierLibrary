@@ -43,7 +43,7 @@ fun setMutableInt(view: TextView,  int: MutableLiveData<Int>?) {
 @BindingAdapter("imageUrl")
 fun setImageUrl(view: ImageView, coverUrl: String) {
     println("PATH $coverUrl")
-    Picasso.with(view.context).load(coverUrl).into(view)
+    Picasso.get().load(coverUrl).into(view)
 }
 
 /**
