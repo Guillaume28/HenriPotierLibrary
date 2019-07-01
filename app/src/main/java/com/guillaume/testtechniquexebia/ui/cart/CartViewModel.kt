@@ -8,14 +8,12 @@ class CartViewModel : BaseViewModel() {
 
     private val bookTitle = MutableLiveData<String>()
     private val bookPrice = MutableLiveData<Int>()
-    // private val bookSynopsis = MutableLiveData<Array<String>>()
+    private val bookCover = MutableLiveData<String>()
 
     fun bind(book: Book){
         bookTitle.value = book.title
         bookPrice.value = book.price
-        /**
-        bookSynopsis.value = book.synopsis
-        */
+        bookCover.value = book.cover
     }
 
     fun getBookTitle():MutableLiveData<String>{
@@ -26,10 +24,8 @@ class CartViewModel : BaseViewModel() {
         return bookPrice
     }
 
-    /**
-    fun getBookSynopsis():MutableLiveData<Array<String>>{
-        return bookSynopsis
+    fun getBookCover(): MutableLiveData<String>{
+        return bookCover
     }
-    */
 
 }

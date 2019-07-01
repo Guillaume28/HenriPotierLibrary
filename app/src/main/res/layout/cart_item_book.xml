@@ -15,6 +15,18 @@
             android:paddingLeft="16dp"
             android:paddingRight="16dp">
 
+        <!--
+        <ImageView
+                android:id="@+id/book_cover"
+                android:layout_width="0dp"
+                android:layout_height="140dp"
+                app:imageUrl="@{viewmodel.getBookCover}"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:layout_marginTop="8dp"/>
+        -->
+
         <TextView
                 android:id="@+id/book_title"
                 android:layout_width="0dp"
@@ -35,19 +47,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/book_title"/>
-
-        <!--
-        <TextView
-                android:id="@+id/book_synopsis"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                app:mutableArrayString="@{viewModel.getBookSynopsis()}"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/book_price"/>
-        -->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

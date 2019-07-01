@@ -3,45 +3,51 @@ package com.guillaume.testtechniquexebia.ui.cart
 import android.content.Context
 import android.widget.Toast
 import com.guillaume.testtechniquexebia.model.Book
+import com.guillaume.testtechniquexebia.model.BookDao
 
 class ShoppingCart {
 
     companion object {
-        fun addItem(book: Book) {
-            val cart = getCart()
-            val targetItem = cart.singleOrNull { book.isbn == book.isbn }
 
-            if (targetItem == null) {
+        private val bookDao: BookDao? = null
+
+        fun addBook(book: Book) {
+            val cart = getCart()
+            val targetBook = cart.singleOrNull { book.isbn == book.isbn }
+
+            if (targetBook == null) {
                 book.quantity++
                 cart.add(book)
             } else {
-                targetItem.quantity++
+                book.isInCart = true
+                targetBook.quantity++
             }
-            saveCart(cart)
+            saveCart(targetBook!!)
         }
 
-        fun removeItem(book: Book, context: Context) {
+        fun removeBook(book: Book, context: Context) {
             val cart = getCart()
-            val targetItem = cart.singleOrNull { book.isbn == book.isbn }
+            val targetBook = cart.singleOrNull { book.isbn == book.isbn }
 
-            if (targetItem != null) {
-                if (targetItem.quantity > 0) {
+            if (targetBook != null) {
+                if (targetBook.quantity > 0) {
                     Toast.makeText(context, "great quantity", Toast.LENGTH_SHORT).show()
-                    targetItem.quantity--
+                    targetBook.quantity--
                 } else {
-                    cart.remove(targetItem)
+                    book.isInCart = false
+                    cart.remove(targetBook)
                 }
             }
 
-            saveCart(cart)
+            saveCart(targetBook!!)
         }
 
-        fun saveCart(cart: MutableList<Book>) {
-            // Write in room
+        private fun saveCart(book: Book) {
+            bookDao?.addToCart(book)
         }
 
         fun getCart(): MutableList<Book> {
-            // return from room
+            return bookDao!!.allBooksInShoppingCart
         }
 
     }

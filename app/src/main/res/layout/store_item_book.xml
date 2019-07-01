@@ -19,7 +19,6 @@
                 android:id="@+id/book_cover"
                 android:layout_width="0dp"
                 android:layout_height="140dp"
-                android:textStyle="bold"
                 app:imageUrl="@{viewModel.getBookCover()}"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"

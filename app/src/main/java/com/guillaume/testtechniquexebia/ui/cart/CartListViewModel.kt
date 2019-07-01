@@ -24,13 +24,13 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { insertBooksInCart() }
+    val errorClickListener = View.OnClickListener { loadBooksInCart() }
 
     val cartListAdapter: CartListAdapter =
         CartListAdapter()
 
     init {
-        insertBooksInCart()
+        loadBooksInCart()
     }
 
     override fun onCleared() {
@@ -38,11 +38,25 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
         subscription.dispose()
     }
 
-    private fun insertBooksInCart() {
-
+    private fun loadBooksInCart() {
+        subscription = Observable.fromCallable { booksDao.allBooksInShoppingCart }
+            .concatMap { dbBooksList ->
+                if (dbBooksList.isEmpty())
+                    bookApi.getBooks().concatMap { apiBooksList -> booksDao.insertAll(*apiBooksList.toTypedArray())
+                        Observable.just(apiBooksList)
+                    }
+                else
+                    Observable.just(dbBooksList)
+            }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doOnSubscribe { onRetrieveBookListStart() }
+            .doOnTerminate { onRetrieveBookListFinish() }
+            .subscribe(
+                { result -> onRetrieveBookListSuccess(result) },
+                { err -> onRetrieveBookListError(err) }
+            )
     }
-
-
 
     private fun onRetrieveBookListStart() {
         loadingVisibility.value = View.VISIBLE
@@ -60,10 +74,6 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     private fun onRetrieveBookListError(err: Throwable) {
         println(err)
         errorMessage.value = R.string.post_error
-    }
-
-    fun getCart(): MutableList<Book> {
-        return booksDao.allBooksInShoppingCart
     }
 
 }

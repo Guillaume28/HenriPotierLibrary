@@ -7,8 +7,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.snackbar.Snackbar
 import com.guillaume.testtechniquexebia.databinding.StoreItemBookBinding
 import com.guillaume.testtechniquexebia.model.Book
-import com.guillaume.testtechniquexebia.model.BookDao
 import com.guillaume.testtechniquexebia.ui.cart.CartListViewModel
+import com.guillaume.testtechniquexebia.ui.cart.ShoppingCart
 import io.reactivex.Observable
 import io.reactivex.ObservableOnSubscribe
 import kotlinx.android.synthetic.main.activity_store_list.*
@@ -48,41 +48,37 @@ class StoreListAdapter : RecyclerView.Adapter<StoreListAdapter.ViewHolder>() {
             viewModel.bind(book)
             binding.viewModel = viewModel
 
-            lateinit var booksDao: BookDao
-            lateinit var cartListViewModel: CartListViewModel
-
             Observable.create(ObservableOnSubscribe<MutableList<Book>> {
 
                 itemView.addToCart.setOnClickListener { view ->
 
-                    booksDao.addToCart(book)
+                    ShoppingCart.addBook(book)
                     Snackbar.make(
                         (itemView.context as StoreListActivity).activityStoreList,
                         "${book.title} added to your cart",
                         Snackbar.LENGTH_LONG
                     ).show()
 
-                    it.onNext(cartListViewModel.getCart())
+                    it.onNext(ShoppingCart.getCart())
 
                 }
 
                 itemView.removeFromCart.setOnClickListener { view ->
 
-                    booksDao.removeFromCart(book)
+                    ShoppingCart.removeBook(book, itemView.context)
                     Snackbar.make(
                         (itemView.context as StoreListActivity).activityStoreList,
                         "${book.title} added to your cart",
                         Snackbar.LENGTH_LONG
                     ).show()
 
-                    it.onNext(cartListViewModel.getCart())
-
+                    it.onNext(ShoppingCart.getCart())
                 }
             }).subscribe { cart ->
                 var quantity = 0
 
-                cart.forEach { cartItem ->
-                    quantity += cartItem.quantity
+                cart.forEach { cartBook ->
+                    quantity += cartBook.quantity
                 }
 
             }
