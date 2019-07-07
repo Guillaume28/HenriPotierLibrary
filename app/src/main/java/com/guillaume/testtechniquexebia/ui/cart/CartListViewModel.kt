@@ -42,6 +42,7 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
         subscription = Observable.fromCallable { booksDao.allBooksInShoppingCart }
             .concatMap { dbBooksList ->
                 if (dbBooksList.isEmpty())
+                    //TODO: Insert tous les livres au lieu de mettre ceux du cart ?
                     bookApi.getBooks().concatMap { apiBooksList -> booksDao.insertAll(*apiBooksList.toTypedArray())
                         Observable.just(apiBooksList)
                     }

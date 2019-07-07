@@ -9,16 +9,18 @@ import com.guillaume.testtechniquexebia.ui.cart.CartListViewModel
 import com.guillaume.testtechniquexebia.ui.store.StoreListViewModel
 
 class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvider.Factory {
-    // @TODO: refactor
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CartListViewModel::class.java)) {
-            val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "books").build()
+            val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "books")
+                //TODO : Rendre les requêtes asynchrones pour éviter de travailler sur le mainthread
+                .allowMainThreadQueries().build()
             @Suppress("UNCHECKED_CAST")
             return CartListViewModel(db.booksDao()) as T
         }
 
         if (modelClass.isAssignableFrom(StoreListViewModel::class.java)) {
-            val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "books").build()
+            val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "books")
+                .allowMainThreadQueries().build()
             @Suppress("UNCHECKED_CAST")
             return StoreListViewModel(db.booksDao()) as T
         }

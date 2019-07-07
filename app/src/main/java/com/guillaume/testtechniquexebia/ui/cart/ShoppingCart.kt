@@ -5,51 +5,49 @@ import android.widget.Toast
 import com.guillaume.testtechniquexebia.model.Book
 import com.guillaume.testtechniquexebia.model.BookDao
 
-class ShoppingCart {
+class ShoppingCart(private val booksDao: BookDao) {
 
-    companion object {
+    // private val bookDao: BookDao? = null
 
-        private val bookDao: BookDao? = null
+    fun addBook(book: Book) {
+        val cart = getCart()
 
-        fun addBook(book: Book) {
-            val cart = getCart()
-            val targetBook = cart.singleOrNull { book.isbn == book.isbn }
+        //TODO: C'est là le null, mauvaise comparaison d'isbn, il faudrait taper dans le livre sélectionner
+        val targetBook = cart.singleOrNull { book.isbn == book.isbn }
 
-            if (targetBook == null) {
-                book.quantity++
-                cart.add(book)
+        //TODO: If à revoir
+        if (targetBook == null) {
+            book.quantity++
+            cart.add(book)
+        } else {
+            book.isInCart = true
+            targetBook.quantity++
+        }
+        saveCart(targetBook!!)
+    }
+
+    fun removeBook(book: Book, context: Context) {
+        val cart = getCart()
+        val targetBook = cart.singleOrNull { book.isbn == book.isbn }
+
+        if (targetBook != null) {
+            if (targetBook.quantity > 0) {
+                Toast.makeText(context, "great quantity", Toast.LENGTH_SHORT).show()
+                targetBook.quantity--
             } else {
-                book.isInCart = true
-                targetBook.quantity++
+                book.isInCart = false
+                cart.remove(targetBook)
             }
-            saveCart(targetBook!!)
         }
+        saveCart(targetBook!!)
+    }
 
-        fun removeBook(book: Book, context: Context) {
-            val cart = getCart()
-            val targetBook = cart.singleOrNull { book.isbn == book.isbn }
+    private fun saveCart(book: Book) {
+        booksDao.addToCart(book)
+    }
 
-            if (targetBook != null) {
-                if (targetBook.quantity > 0) {
-                    Toast.makeText(context, "great quantity", Toast.LENGTH_SHORT).show()
-                    targetBook.quantity--
-                } else {
-                    book.isInCart = false
-                    cart.remove(targetBook)
-                }
-            }
-
-            saveCart(targetBook!!)
-        }
-
-        private fun saveCart(book: Book) {
-            bookDao?.addToCart(book)
-        }
-
-        fun getCart(): MutableList<Book> {
-            return bookDao!!.allBooksInShoppingCart
-        }
-
+    fun getCart(): MutableList<Book> {
+        return booksDao.allBooksInShoppingCart
     }
 
 }

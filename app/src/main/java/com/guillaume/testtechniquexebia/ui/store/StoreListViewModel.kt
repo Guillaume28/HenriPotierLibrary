@@ -24,8 +24,7 @@ class StoreListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
     val errorClickListener = View.OnClickListener { loadBooks() }
 
-    val storeListAdapter: StoreListAdapter =
-        StoreListAdapter()
+    val storeListAdapter: StoreListAdapter = StoreListAdapter(booksDao)
 
     init {
         loadBooks()
@@ -73,4 +72,5 @@ class StoreListViewModel(private val booksDao: BookDao) : BaseViewModel() {
         println(err)
         errorMessage.value = R.string.post_error
     }
+
 }
