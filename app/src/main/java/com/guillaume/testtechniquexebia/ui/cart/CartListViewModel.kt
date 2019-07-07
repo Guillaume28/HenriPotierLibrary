@@ -42,7 +42,6 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
         subscription = Observable.fromCallable { booksDao.allBooksInShoppingCart }
             .concatMap { dbBooksList ->
                 if (dbBooksList.isEmpty())
-                    //TODO: Insert tous les livres au lieu de mettre ceux du cart ?
                     bookApi.getBooks().concatMap { apiBooksList -> booksDao.insertAll(*apiBooksList.toTypedArray())
                         Observable.just(apiBooksList)
                     }
@@ -55,7 +54,7 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
             .doOnTerminate { onRetrieveBookListFinish() }
             .subscribe(
                 { result -> onRetrieveBookListSuccess(result) },
-                { err -> onRetrieveBookListError(err) }
+                { onRetrieveBookListError() }
             )
     }
 
@@ -72,9 +71,8 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
         cartListAdapter.updateBooksList(bookList)
     }
 
-    private fun onRetrieveBookListError(err: Throwable) {
-        println(err)
-        errorMessage.value = R.string.post_error
+    private fun onRetrieveBookListError() {
+        errorMessage.value = R.string.no_book_in_cart
     }
 
 }

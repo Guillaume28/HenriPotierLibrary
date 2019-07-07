@@ -10,6 +10,6 @@ data class Book(
     val title: String,
     val price: Int,
     val cover: String,
-    var isInCart: Boolean = false,
+    var isInCart: Int = 0,
     var quantity: Int = 0
 )

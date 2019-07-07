@@ -55,7 +55,6 @@ class StoreListAdapter(private val bookDao: BookDao) : RecyclerView.Adapter<Stor
 
                 itemView.addToCart.setOnClickListener { view ->
 
-                    // ShoppingCart.addBook(book)
                     ShoppingCart(bookDao).addBook(book)
                     Snackbar.make(
                         (itemView.context as StoreListActivity).activityStoreList,
@@ -63,22 +62,19 @@ class StoreListAdapter(private val bookDao: BookDao) : RecyclerView.Adapter<Stor
                         Snackbar.LENGTH_LONG
                     ).show()
 
-                    // it.onNext(ShoppingCart.getCart())
                     it.onNext(ShoppingCart(bookDao).getCart())
 
                 }
 
                 itemView.removeFromCart.setOnClickListener { view ->
 
-                    // ShoppingCart.removeBook(book, itemView.context)
-                    ShoppingCart(bookDao).removeBook(book, itemView.context)
+                    ShoppingCart(bookDao).removeBook(book)
                     Snackbar.make(
                         (itemView.context as StoreListActivity).activityStoreList,
                         "${book.title} added to your cart",
                         Snackbar.LENGTH_LONG
                     ).show()
 
-                    // it.onNext(ShoppingCart.getCart())
                     it.onNext(ShoppingCart(bookDao).getCart())
                 }
             })

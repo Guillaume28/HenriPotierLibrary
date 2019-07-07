@@ -13,7 +13,7 @@ interface BookDao {
     @Insert
     fun insertAll(vararg books: Book)
 
-    @get:Query("SELECT * FROM book WHERE book.isInCart = 'true'")
+    @get:Query("SELECT * FROM book WHERE book.isInCart = 1")
     val allBooksInShoppingCart: MutableList<Book>
 
     @Update
