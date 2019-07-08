@@ -3,6 +3,7 @@ package com.guillaume.testtechniquexebia.injection.component
 import com.guillaume.testtechniquexebia.injection.module.NetworkModule
 import com.guillaume.testtechniquexebia.ui.cart.CartListViewModel
 import com.guillaume.testtechniquexebia.ui.cart.CartViewModel
+import com.guillaume.testtechniquexebia.ui.cart.ShoppingCart
 import com.guillaume.testtechniquexebia.ui.store.StoreListViewModel
 import com.guillaume.testtechniquexebia.ui.store.StoreViewModel
 import dagger.Component
@@ -26,10 +27,11 @@ interface ViewModelInjector {
 
     fun inject(storeViewModel: StoreViewModel)
 
+    fun inject(shoppingCart: ShoppingCart)
+
     @Component.Builder
     interface Builder {
         fun build(): ViewModelInjector
-
         fun networkModule(networkModule: NetworkModule): Builder
     }
 }

@@ -14,7 +14,6 @@ import retrofit2.converter.moshi.MoshiConverterFactory
  * Module which provides all required dependencies about network
  */
 @Module
-// Safe here as we are dealing with a Dagger 2 module
 @Suppress("unused")
 object NetworkModule {
     /**

@@ -2,14 +2,12 @@ package com.guillaume.testtechniquexebia.ui.cart
 
 import android.view.View
 import androidx.lifecycle.MutableLiveData
-import androidx.room.Room
 import com.guillaume.testtechniquexebia.BaseViewModel
 import com.guillaume.testtechniquexebia.R
 import com.guillaume.testtechniquexebia.model.Book
 import com.guillaume.testtechniquexebia.model.BookDao
 import com.guillaume.testtechniquexebia.network.BookApi
 import io.reactivex.Observable
-import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.Disposable
 import io.reactivex.schedulers.Schedulers
@@ -24,7 +22,6 @@ class CartListViewModel(private val booksDao: BookDao) : BaseViewModel() {
     val loadingVisibility: MutableLiveData<Int> = MutableLiveData()
 
     val errorMessage: MutableLiveData<Int> = MutableLiveData()
-    val errorClickListener = View.OnClickListener { loadBooksInCart() }
 
     val cartListAdapter: CartListAdapter =
         CartListAdapter()
