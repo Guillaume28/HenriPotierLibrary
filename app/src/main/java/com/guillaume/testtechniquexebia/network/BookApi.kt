@@ -13,5 +13,4 @@ interface BookApi {
 
     @GET("/books/{isbn}/commercialOffers")
     fun getCommercialOffers(@Path("isbn") isbn: String): CommercialOffers
-
 }

@@ -5,11 +5,7 @@ import com.google.gson.annotations.SerializedName
 data class CommercialOffer(
     val type: Type,
     val value: Float,
-    val sliceValue: Float
-)
-
-data class CommercialOffers(
-    val offers: List<CommercialOffer>
+    val sliceValue: Float?
 )
 
 enum class Type {

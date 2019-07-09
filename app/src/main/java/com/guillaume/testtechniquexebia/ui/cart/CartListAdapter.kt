@@ -3,6 +3,8 @@ package com.guillaume.testtechniquexebia.ui.cart
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.databinding.Observable
+import androidx.databinding.ObservableFloat
 import androidx.recyclerview.widget.RecyclerView
 import com.guillaume.testtechniquexebia.R
 import com.guillaume.testtechniquexebia.databinding.CartItemBookBinding
@@ -37,6 +39,7 @@ class CartListAdapter : RecyclerView.Adapter<CartListAdapter.ViewHolder>() {
         fun bind(book: Book) {
             viewModel.bind(book)
             binding.viewModel = viewModel
+
         }
     }
 }

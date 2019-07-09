@@ -12,7 +12,6 @@ class ViewModelFactory(private val activity: AppCompatActivity) : ViewModelProvi
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(CartListViewModel::class.java)) {
             val db = Room.databaseBuilder(activity.applicationContext, AppDatabase::class.java, "books")
-                //TODO : Rendre les requêtes asynchrones pour éviter de travailler sur le mainthread
                 .allowMainThreadQueries().build()
             @Suppress("UNCHECKED_CAST")
             return CartListViewModel(db.booksDao()) as T

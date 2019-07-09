@@ -1,10 +1,7 @@
 package com.guillaume.testtechniquexebia.ui.cart
 
 import com.guillaume.testtechniquexebia.BaseShoppingCart
-import com.guillaume.testtechniquexebia.model.Book
-import com.guillaume.testtechniquexebia.model.BookDao
-import com.guillaume.testtechniquexebia.model.CommercialOffer
-import com.guillaume.testtechniquexebia.model.Type
+import com.guillaume.testtechniquexebia.model.*
 import com.guillaume.testtechniquexebia.network.BookApi
 import javax.inject.Inject
 
@@ -59,29 +56,26 @@ class ShoppingCart(private val booksDao: BookDao) : BaseShoppingCart() {
         return booksDao.allBooksInShoppingCart
     }
 
-    /*
-    fun getBooksDiscount(): Float {
+
+    /** Discount region **/
+    fun getBooksDiscount(): Float? {
         val cart = getCart()
         val price = cart.fold(0) { sum, book -> sum + book.price }
         val commercialOffers = bookApi.getCommercialOffers(cart.joinToString { it.isbn })
 
-
-        val total =
-
-        return total
-    }
-    */
-
-    fun getBestOffer(amount: Float, offers: List<CommercialOffer>): Float? {
-        return offers.map { computeDiscount(amount, it) }.min()
+        return getBestOffer(price, commercialOffers)
     }
 
-    fun computeDiscount(amount: Float, offer: CommercialOffer): Float =
+    fun getBestOffer(amount: Int, offers: CommercialOffers): Float? {
+        return offers.offers.map { computeDiscount(amount, it) }.min()
+    }
+
+    fun computeDiscount(amount: Int, offer: CommercialOffer): Float =
         when (offer.type) {
             Type.MINUS -> offer.value
             Type.PERCENTAGE -> amount * offer.value / 100
-            Type.SLICE -> (amount / offer.sliceValue).toInt() * offer.value
-            else -> 0F
+            Type.SLICE -> (amount / offer.sliceValue!!).toInt() * offer.value
         }
+    /** End of region **/
 
 }

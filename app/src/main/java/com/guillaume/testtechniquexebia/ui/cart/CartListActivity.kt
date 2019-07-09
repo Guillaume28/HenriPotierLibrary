@@ -45,4 +45,5 @@ class CartListActivity : AppCompatActivity() {
     private fun hideError() {
         errorSnackbar?.dismiss()
     }
+
 }
